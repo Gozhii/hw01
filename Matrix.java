@@ -1,15 +1,16 @@
 package com.company.hw01;
 
 import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.util.Arrays;
 
-public class Matrix  extends Object implements Serializable {
+public class Matrix extends Object implements Serializable {
     private int[][] matrix;
     private int height;
     private int width;
-    private Matrix existring = null;
-    private boolean sorted = false;
+    //if we create an instance of a class, but do not enter data into it,
+    // that we need to check it, otherwise we output an empty matrix
+    private boolean exist;
+    private boolean sorted;
 
     public Matrix(int width, int height){
         matrix = new int[width][height];
@@ -18,15 +19,15 @@ public class Matrix  extends Object implements Serializable {
     }
 
     public Matrix(int[][] matrix){
-        existring = this;
+        exist = true;
         this.matrix = matrix;
     }
 
     public void printMatrix() {
-        if (existring != null) {
-            for (int i = 0; i < matrix.length; i++) {
-                for (int e = 0; e < matrix[0].length; e++) {
-                    System.out.print(matrix[i][e] + " ");
+        if (exist == true) {
+            for (int index = 0; index < matrix.length; index++) {
+                for (int element = 0; element < matrix[0].length; element++) {
+                    System.out.print(matrix[index][element] + " ");
                 }
                 System.out.println("\n");
             }
@@ -34,16 +35,19 @@ public class Matrix  extends Object implements Serializable {
     }
 
     public int[] getDiagonal(){
-        if(existring != null){
+        if(exist == true){
             if(matrix.length != matrix[0].length){
                 System.out.println("Matrix is not square");
                 return null;
             }else{
                 int[] array = new int[matrix.length];
-                for(int i = 0; i < matrix.length; i++){
-                    array[i] = matrix[i][i];
+                for(int index = 0; index < matrix.length; index++){
+                    array[index] = matrix[index][index];
                 }
-                for(int i = 0; i < array.length; i++){System.out.print(array[i]);}
+
+                for(int index = 0; index < array.length; index++){
+                    System.out.print(array[index]);
+                }
                 return array;
             }
         }else{ System.out.println("Error. An instance is not initialized");
@@ -52,7 +56,7 @@ public class Matrix  extends Object implements Serializable {
     }
 
     public int getMaxValue(){
-        if(existring != null) {
+        if(exist == true) {
             if (sorted == true) {
                 return matrix[matrix.length - 1][matrix[0].length - 1];
             }
@@ -72,15 +76,15 @@ public class Matrix  extends Object implements Serializable {
     }
 
     public int getMinValue(){
-        if(existring != null) {
+        if(exist == true) {
             if (sorted == true) {
                 return matrix[0][0];
             }
             int min = Integer.MAX_VALUE;
-            for (int i = 0; i < matrix.length; i++) {
-                for (int e = 0; e < matrix[0].length; e++) {
-                    if (matrix[i][e] < min) {
-                        min = matrix[i][e];
+            for (int index = 0; index < matrix.length; index++) {
+                for (int element = 0; element < matrix[0].length; element++) {
+                    if (matrix[index][element] < min) {
+                        min = matrix[index][element];
                     }
                 }
             }
@@ -94,17 +98,17 @@ public class Matrix  extends Object implements Serializable {
     public static int[][] sort(Matrix matrix){
         int[] arr = new int[matrix.matrix.length * matrix.matrix[0].length];
         int f = 0;
-        for(int i = 0; i < matrix.matrix.length; i++) {
-            for (int e = 0; e < matrix.matrix[0].length; e++) {
-                 arr[f] = matrix.matrix[i][e];
+        for(int index = 0; index < matrix.matrix.length; index++) {
+            for (int element = 0; element < matrix.matrix[0].length; element++) {
+                 arr[f] = matrix.matrix[index][element];
                 f++;
             }
         }
         Arrays.sort(arr);
         f = 0;
-        for(int i = 0; i < matrix.matrix.length; i++) {
-            for (int e = 0; e < matrix.matrix[0].length; e++) {
-                matrix.matrix[i][e] = arr[f];
+        for(int index = 0; index < matrix.matrix.length; index++) {
+            for (int element = 0; element < matrix.matrix[0].length; element++) {
+                matrix.matrix[index][element] = arr[f];
                 f++;
             }
         }

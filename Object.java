@@ -5,7 +5,12 @@ import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+//The class is called Object because I implement a method of this class
 public class Object {
+
+    //Оur lecturer said to implement only deep cloning(maybe I something not so understood)
+    //If I use this method, the new instance already has a new hash code as well as its fields.
+    // Otherwise, they are identical to the old instance
     public static Object deepClone(Object object){
         try {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
