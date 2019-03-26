@@ -1,39 +1,40 @@
 package com.company.hw01;
 
 
-public class Sort{
+public class Sort {
 
     public int[] bubleSort(int[] arr) {
+        int temp;
         for (int i = arr.length; i > 0; i--) {
             for (int e = 0; e < (i - 1); e++) {
                 if (arr[e] > arr[e + 1]) {
-                    swap(e,e+1);
+                    temp = arr[e];
+                    arr[e] = arr[e + 1];
+                    arr[e + 1] = temp;
                 }
             }
         }
         return arr;
     }
 
-    private void swap(int i, int e) {
-        //Using another variable has additional memory
-        e+=i;
-        i = e - i;
-        e-=i;
-    }
-
     public int[] sheikerSort(int[] arr) {
         int left = 0;
         int right = arr.length - 1;
+        int temp;
         do {
             for (int i = left; i < right; i++) {
                 if (arr[i] > arr[i + 1]) {
-                    swap(arr[i],arr[i+1]);
+                    temp = arr[i];
+                    arr[i] = arr[i + 1];
+                    arr[i + 1] = temp;
                 }
             }
             right--;
             for (int i = right; i > left; i--) {
                 if (arr[i] < arr[i - 1]) {
-                    swap(arr[i], arr[i-1]);
+                    temp = arr[i];
+                    arr[i] = arr[i - 1];
+                    arr[i - 1] = temp;
                 }
             }
             left++;
@@ -58,22 +59,28 @@ public class Sort{
     }
 
     public int[] insertionSort(int[] arr) {
+        int temp;
         for (int i = 1; i < arr.length; i++) {
             int e = i;
             while (e > 0 && (arr[e] < arr[e - 1])) {
-                swap(arr[e],arr[e-1]);
+                temp = arr[e];
+                arr[e] = arr[e - 1];
+                arr[e - 1] = temp;
                 e--;
             }
         }
         return arr;
     }
 
-    public int[] gmomeSort(int a[]){
+    public int[] gmomeSort(int a[]) {
         int pos;
-        for(int i = 0; i < a.length; i++){
+        int temp;
+        for (int i = 0; i < a.length; i++) {
             pos = i;
-            while(pos > 0 && a[pos-1] > a[pos]){
-                swap(a[pos-1],a[pos]);
+            while (pos > 0 && a[pos - 1] > a[pos]) {
+                temp = a[pos - 1];
+                a[pos - 1] = a[pos];
+                a[pos] = temp;
                 pos = pos - 1;
             }
         }
@@ -81,3 +88,4 @@ public class Sort{
     }
 
 }
+
