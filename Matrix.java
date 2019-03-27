@@ -1,115 +1,127 @@
-package com.company.hw01;
+ package com.company.hw01;
 
-import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.util.Arrays;
 
-public class Matrix  extends Object implements Serializable {
+public class Matrix implements Cloneable {
     private int[][] matrix;
-    private int height;
-    private int width;
-    private Matrix existring = null;
-    private boolean sorted = false;
+    private boolean sorted;
 
-    public Matrix(int width, int height){
-        matrix = new int[width][height];
-        this.height = height;
-        this.width = width;
-    }
-
-    public Matrix(int[][] matrix){
-        existring = this;
+    public Matrix(int[][] matrix) {
         this.matrix = matrix;
     }
 
     public void printMatrix() {
-        if (existring != null) {
-            for (int i = 0; i < matrix.length; i++) {
-                for (int e = 0; e < matrix[0].length; e++) {
-                    System.out.print(matrix[i][e] + " ");
-                }
-                System.out.println("\n");
+        for (int index = 0; index < matrix.length; index++) {
+            for (int element = 0; element < matrix[0].length; element++) {
+                System.out.print(matrix[index][element] + " ");
             }
-        }else System.out.println("Error. An instance is not initialized");
-    }
-
-    public int[] getDiagonal(){
-        if(existring != null){
-            if(matrix.length != matrix[0].length){
-                System.out.println("Matrix is not square");
-                return null;
-            }else{
-                int[] array = new int[matrix.length];
-                for(int i = 0; i < matrix.length; i++){
-                    array[i] = matrix[i][i];
-                }
-                for(int i = 0; i < array.length; i++){System.out.print(array[i]);}
-                return array;
-            }
-        }else{ System.out.println("Error. An instance is not initialized");
-                return null;
+            System.out.println("\n");
         }
     }
 
-    public int getMaxValue(){
-        if(existring != null) {
-            if (sorted == true) {
-                return matrix[matrix.length - 1][matrix[0].length - 1];
+    public int[] getDiagonal() {
+
+        if (matrix.length != matrix[0].length) {
+            System.out.println("Matrix is not square");
+            return null;
+        } else {
+            int[] array = new int[matrix.length];
+            for (int index = 0; index < matrix.length; index++) {
+                array[index] = matrix[index][index];
             }
-            int max = Integer.MIN_VALUE;
-            for (int i = 0; i < matrix.length; i++) {
-                for (int e = 0; e < matrix[0].length; e++) {
-                    if (matrix[i][e] > max) {
-                        max = matrix[i][e];
-                    }
-                }
+
+            for (int index = 0; index < array.length; index++) {
+                System.out.print(array[index]);
             }
-            return max;
-        }else{
-            System.out.println("Error. An instance is not initialized");
-            return Integer.MIN_VALUE;
+            return array;
         }
     }
 
-    public int getMinValue(){
-        if(existring != null) {
-            if (sorted == true) {
-                return matrix[0][0];
-            }
-            int min = Integer.MAX_VALUE;
-            for (int i = 0; i < matrix.length; i++) {
-                for (int e = 0; e < matrix[0].length; e++) {
-                    if (matrix[i][e] < min) {
-                        min = matrix[i][e];
-                    }
+    public int getMaxValue() {
+        if (sorted == true) {
+            return matrix[matrix.length - 1][matrix[0].length - 1];
+        }
+        int max = Integer.MIN_VALUE;
+        for (int i = 0; i < matrix.length; i++) {
+            for (int e = 0; e < matrix[0].length; e++) {
+                if (matrix[i][e] > max) {
+                    max = matrix[i][e];
                 }
             }
-            return min;
-        }else{
-            System.out.println("Error. An instance is not initialized");
-            return Integer.MAX_VALUE;
         }
+        return max;
     }
 
-    public static int[][] sort(Matrix matrix){
+    public int getMinValue() {
+        if (sorted == true) {
+            return matrix[0][0];
+        }
+        int min = Integer.MAX_VALUE;
+        for (int index = 0; index < matrix.length; index++) {
+            for (int element = 0; element < matrix[0].length; element++) {
+                if (matrix[index][element] < min) {
+                    min = matrix[index][element];
+                }
+            }
+        }
+        return min;
+    }
+
+    public static int[][] sort(Matrix matrix) {
         int[] arr = new int[matrix.matrix.length * matrix.matrix[0].length];
         int f = 0;
-        for(int i = 0; i < matrix.matrix.length; i++) {
-            for (int e = 0; e < matrix.matrix[0].length; e++) {
-                 arr[f] = matrix.matrix[i][e];
+        for (int index = 0; index < matrix.matrix.length; index++) {
+            for (int element = 0; element < matrix.matrix[0].length; element++) {
+                arr[f] = matrix.matrix[index][element];
                 f++;
             }
         }
         Arrays.sort(arr);
         f = 0;
-        for(int i = 0; i < matrix.matrix.length; i++) {
-            for (int e = 0; e < matrix.matrix[0].length; e++) {
-                matrix.matrix[i][e] = arr[f];
+        for (int index = 0; index < matrix.matrix.length; index++) {
+            for (int element = 0; element < matrix.matrix[0].length; element++) {
+                matrix.matrix[index][element] = arr[f];
                 f++;
             }
         }
         matrix.sorted = true;
         return matrix.matrix;
+    }
+
+    @Override
+    public Matrix clone() throws CloneNotSupportedException {
+        Matrix cloneObj = (Matrix) super.clone();
+        return cloneObj;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        Matrix matrix = (Matrix) obj;
+        if (this.matrix == null) {
+            if (matrix.matrix != null) {
+                return false;
+            }
+        } else if (!matrix.equals(matrix.matrix)) {
+            return false;
+        }
+        return true;
+    }
+ 
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + matrix.hashCode();
+        return result;
     }
 
 }
