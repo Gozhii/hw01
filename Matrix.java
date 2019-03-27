@@ -1,9 +1,8 @@
-package com.company.hw01;
+ package com.company.hw01;
 
-import java.io.Serializable;
 import java.util.Arrays;
 
-public class Matrix implements Serializable, deepClonanble {
+public class Matrix implements Cloneable {
     private int[][] matrix;
     private boolean sorted;
 
@@ -87,6 +86,34 @@ public class Matrix implements Serializable, deepClonanble {
         }
         matrix.sorted = true;
         return matrix.matrix;
+    }
+
+    @Override
+    public Matrix clone() throws CloneNotSupportedException {
+        Matrix cloneObj = (Matrix) super.clone();
+        return cloneObj;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        Matrix matrix = (Matrix) obj;
+        if (this.matrix == null) {
+            if (matrix.matrix != null) {
+                return false;
+            }
+        } else if (!matrix.equals(matrix.matrix)) {
+            return false;
+        }
+        return true;
     }
 
 }
