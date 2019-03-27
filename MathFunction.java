@@ -3,12 +3,9 @@ package com.company.hw01;
 public class MathFunction {
 
     public double getPow(float x, double pow) {
-        double inner_pow = pow;
+
         double result = x;
-        if (pow < 0) {
-            inner_pow = -pow;
-        }
-        for (int i = 1; i < inner_pow; i++) {
+        for (int i = 1; i < Math.abs(pow); i++) {
             result *= x;
         }
         if (pow > 0) {
